@@ -5,26 +5,8 @@
 | 端 | 标签 | 宽度 | 高度 | DPR | isMobile | 代表设备 |
 |----|------|------|------|-----|----------|---------|
 | Desktop | `desktop` | 1440 | 900 | 1 | false | MacBook Pro 15" |
-| Tablet | `tablet` | 768 | 1024 | 2 | **true** | iPad (portrait) |
+| Tablet | `tablet` | 768 | 1024 | 2 | false | iPad (portrait) |
 | Mobile | `mobile` | 375 | 812 | 3 | true | iPhone 13/14/15 |
-
-### 关于 Tablet 端的 `isMobile` 设置
-
-**当前选择 `isMobile: true`，原因：**
-
-真实的 iPad 是触控设备，`isMobile: true` 的效果：
-- Chromium 发送移动端 User-Agent
-- 启用触控事件模拟（`pointer: coarse`, `hover: none`）
-- CSS 媒体查询 `@media (hover: hover)` 和 `@media (pointer: fine)` 的结果更贴近真实 iPad
-
-**如果需要测试 `isMobile: false` 的 Tablet 表现**（模拟带键盘/鼠标的平板场景），可使用扩展设备中的 `tablet-desktop-mode` 配置。
-
-**权衡说明：**
-
-| 设置 | 优点 | 缺点 |
-|------|------|------|
-| `isMobile: true` | 更贴近真实 iPad 用户体验；触控相关 CSS 查询结果准确 | 某些网站会因 mobile UA 返回移动版页面 |
-| `isMobile: false` | 更接近桌面浏览器行为；适合测试"平板+键盘"场景 | 触控体验无法真实模拟；hover 效果可能掩盖问题 |
 
 ## 扩展设备预设
 
@@ -34,30 +16,10 @@
 |----|------|------|------|-----|----------|---------|
 | Desktop Wide | `desktop-wide` | 1920 | 1080 | 1 | false | 外接显示器 |
 | Desktop Narrow | `desktop-narrow` | 1280 | 720 | 1 | false | 小笔记本 |
-| Tablet Landscape | `tablet-landscape` | 1024 | 768 | 2 | true | iPad (landscape) |
-| Tablet Desktop Mode | `tablet-desktop-mode` | 768 | 1024 | 2 | false | iPad + 键盘/鼠标 |
+| Tablet Landscape | `tablet-landscape` | 1024 | 768 | 2 | false | iPad (landscape) |
 | Tablet Small | `tablet-small` | 601 | 962 | 2.625 | true | Nexus 7 |
 | Mobile Large | `mobile-large` | 414 | 896 | 3 | true | iPhone 11 Pro Max |
 | Mobile Small | `mobile-small` | 320 | 568 | 2 | true | iPhone SE (1st gen) |
-
-## 中间断点测试设备
-
-用于断点过渡检查（checklist 第六节），测试断点之间的中间尺寸：
-
-| 标签 | 宽度 | 高度 | DPR | isMobile | 测试目标 |
-|------|------|------|-----|----------|---------|
-| `bp-500` | 500 | 900 | 1 | false | 手机横屏 / xs→sm 过渡 |
-| `bp-600` | 600 | 900 | 1 | false | sm→md 过渡 |
-| `bp-900` | 900 | 900 | 1 | false | md→lg 过渡（平板横屏区间） |
-| `bp-1100` | 1100 | 900 | 1 | false | lg→xl 过渡 |
-| `bp-1280` | 1280 | 900 | 1 | false | xl→xxl 过渡 |
-
-**在 `responsive-capture.sh` 中使用中间断点**：
-
-```bash
-bash responsive-capture.sh "<url>" "<output_dir>" "" \
-  "bp-500|500|900|1|false,bp-600|600|900|1|false,bp-900|900|900|1|false,bp-1100|1100|900|1|false,bp-1280|1280|900|1|false"
-```
 
 ## PLAYWRIGHT_MCP_DEVICE 预设名
 
